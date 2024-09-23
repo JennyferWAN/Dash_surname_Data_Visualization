@@ -56,6 +56,25 @@ df['sexeName'] = df.Sexe.apply(rename_sexe)
 # Add a zero in front of departments from 1 to 9.
 df['Departement'] = df['Departement'].apply(lambda x: f"{int(x):02}")
 
+# Convert all first names to lowercase for case-insensitive comparison
+df['Prenom_lower'] = df['Prenom'].str.lower()
+
+# Function to search for first names case-insensitively
+def find_prenom(prenom):
+prenom = prenom.lower()  # Convert the searched name to lowercase
+result = df[df['Prenom_lower'] == prenom]
+return result
+
+# Example usage: search for a first name
+prenom_recherche = input("Enter a first name: ")
+result = find_prenom(prenom_recherche)
+
+# Display the result
+if not result.empty:
+print(result)
+else:
+print("Name not found.")
+
 ##_______________________________________________________________
 
 # App layout
