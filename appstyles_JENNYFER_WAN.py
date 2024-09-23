@@ -59,22 +59,6 @@ df['Departement'] = df['Departement'].apply(lambda x: f"{int(x):02}")
 # Convert all first names to lowercase for case-insensitive comparison
 df['Prenom_lower'] = df['Prenom'].str.lower()
 
-# Function to search for first names case-insensitively
-def find_prenom(prenom):
-prenom = prenom.lower()  # Convert the searched name to lowercase
-result = df[df['Prenom_lower'] == prenom]
-return result
-
-# Example usage: search for a first name
-prenom_recherche = input("Enter a first name: ")
-result = find_prenom(prenom_recherche)
-
-# Display the result
-if not result.empty:
-print(result)
-else:
-print("Name not found.")
-
 ##_______________________________________________________________
 
 # App layout
@@ -179,7 +163,9 @@ def update_graph(prenom_choisi, sexe_choisi, annee_choisi, departement_choisi):
     filtered_df = df
     
     if prenom_choisi:
-        filtered_df = filtered_df[filtered_df['Prenom'] == prenom_choisi]
+        # Convert user input to lowercase for case-insensitive comparison
+        prenom_choisi_lower = prenom_choisi.lower()
+        filtered_df = filtered_df[filtered_df['Prenom_lower'] == prenom_choisi_lower]
     
     if sexe_choisi:
         filtered_df = filtered_df[filtered_df['sexeName'].isin(sexe_choisi)]
